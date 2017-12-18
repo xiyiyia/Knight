@@ -1,220 +1,115 @@
-#ifndef GRAPHLNK_H
-#define GRAPHLNK_H
-#include "Graph.h"
+#ifndef READTXTUSE_H_
+#define READTXTUSE_H_
 
-template<class T,class E>
-class Graphlnk : public Graph<T,E>
-{
-private:
-	Vertex<T, E> * NodeTable;
-	int getVertexPos(const T vertex)
-	{
-		for (int i = 0; i< numVertices; i++)
-			if (NodeTable[i].data == vertex)
-				return i;
-		return -1;
+#include<fstream>
+#include<string>
+#include"Readtxt.h"
+#include"GraphApp.h"
+void Readtxt::Read() {
+	int a1, a2, a3;
+	Router R;
+	Path P;
+	ifstream ifile1, ifile2;
+	ifile1.open("Router.txt");
+	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
+	while (ifile1.eof() != 1) {
+		ifile1 >> a1;
+		R.number = a1;
+		Rou.push_back(R);
 	}
-public:
-	Graphlnk(int sz = DeafultVertices);
-	~Graphlnk();
-	T getValue(int i)			
-	{
-		return (i>=0 && i< numVertices)? NodeTable[i].data:0;
-	}
-	E getWeight(int v1,int v2);		
-	bool insertVertex(const T vertex);
-	bool removeVertex(int v);
-	bool insertEdge(int v1, int v2,E cost);
-	bool removeEdge(int v1,int v2);
-	int getFirstNeighbor(int v);
-	int getNextNeighbor(int v,int w );
-	int NumberOfVertices()
-	{
-		return this->numVertices;
-	}
-};
-
-template<class T,class E>
-Graphlnk<T,E>::Graphlnk(int sz )
-{
-	maxVertices = sz;
-	numVertices = 0;
-	numEdges = 0;
-	NodeTable = new Vertex<T, E>[maxVertices];    
-	if (NodeTable == NULL) { cerr << "存储分配错误！" << endl; exit(1); }
-	for(int i = 0;i<maxVertices;i++)NodeTable[i].adj =NULL;
+	ifile1.close();
+	ifile2.open("Path.txt");
+	if (!ifile2) { cout << "无法打开文本" << endl; exit(1); }
+	while (ifile2.eof() != 1) {
+		ifile2 >> a1 >> a2 >> a3;
+		P.start = a1;
+		P.end = a2;
+		P.path = a3;
+		Pat.push_back(P);
+	} 
+	ifile2.close();
 }
-template<class T,class E>
-Graphlnk<T,E>::~Graphlnk()
-{
-	for(int i = 0;i<maxVertices;i++)
-	{
-		Edge<T,E> * p = NodeTable[i].adj;
-		while (p != NULL)
-		{
-			NodeTable[i].adj = p->link;
-			delete p;
-			p = NodeTable[i].adj;
-		}
+void Readtxt::Shortest() {
+	Graphlnk<int, int> Gra;
+	int a[2025];
+	int b[2025];
+	int c[2025];
+	int d, D;
+	int*distance = new int[2025];
+	int *path = new int[2025];
+	for (int j = 0; j < (int)Rou.size(); j++) {
+		a[j] = Rou[j].number;
+		Gra.insertVertex(a[j]);
 	}
-	delete[] NodeTable;
-}
-template<class T,class E>
-int Graphlnk<T,E>::getFirstNeighbor(int v)
-{
-	if(v != -1)
-	{
-		Edge<T,E> * p = NodeTable[v].adj;
-		if( p != NULL) return p->dest;
+	for (int i = 0; i < (int)Pat.size(); i++) {
+		a[i] = Pat[i].start;
+		b[i] = Pat[i].end;
+		c[i] = Pat[i].path;
+		Gra.insertEdge(a[i], b[i], c[i]);
 	}
-	return -1;
+	cout << "输入你需要查找的路由器的路由表：";
+	cin >> d;
+	D=Gra.getValue(d);
+	ShortestPath(Gra, D, distance, path);
 }
-template<class T,class E>
-int Graphlnk<T,E>::getNextNeighbor(int v,int w )
-{
-	if(v != -1)
-	{
-		Edge<T,E> * p = NodeTable[v].adj;
-		while (p!= NULL && p->dest != w)
-		{
-			p = p->link;
-		}
-		if( p != NULL && p->link != NULL)
-			return p->link->dest;
+void Readtxt::Add() {
+	int a1, a2, b1;
+	ofstream ifile1, ifile2;
+	ifile1.open("Router.txt");
+	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
+	cout << "输入你需要添加的路由器：";
+	cin >> a1;
+	ifile1 << a1<<" ";
+	ifile1.close();
+	ifile2.open("Path.txt");
+	if (!ifile2) { cout << "无法打开文本" << endl; exit(1); }
+	cout << "输入该路由器可直达的路由器，及其权值：";
+	cin >> a1 >> a2 >> b1;
+	ifile2 << a1 << " " << a2 << " " << b1 << " " << endl;
+}
+void Readtxt::DeleteRouter() {
+	int a1;
+	int a[2025];
+	int b[2025];
+	int c[2025];
+	ofstream ifile1, ifile2;
+	cout << "输入你要删除的路由器：";
+	cin >> a1;
+	ifile1.open("Router.txt");
+	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
+	for (int j = 0; j < (int)Rou.size(); j++) {
+		a[j] = Rou[j].number;
+		if (a[j] == a1) { continue; }
+		ifile1 << a[j] << " ";
 	}
-	return -1;
-}
-template<class T,class E>
-E Graphlnk<T,E>::getWeight(int v1,int v2)
-{
-	if( v1 != -1 && v2 != -1)
-	{
-		Edge<T,E> *p = NodeTable[v1].adj;
-		while (p!= NULL && p->dest != v2)
-		{
-			p = p->link;
-		}
-		if(p != NULL) 
-			return p->cost;
-		else return maxWeight;
+	ifile1.close();
+	ifile2.open("Path.txt");
+	if (!ifile2) { cout << "无法打开文本" << endl; exit(1); }
+	for (int i = 0; i < (int)Pat.size(); i++) {
+		a[i] = Pat[i].start;
+		b[i] = Pat[i].end;
+		c[i] = Pat[i].path;
+		if (a[i] == a1 || b[i] == a1) { continue; }
+		ifile2 << a[i] << " " << b[i] << " " << c[i] << endl;
 	}
+	ifile2.close();
 }
-template<class T,class E>
-bool Graphlnk<T,E>::insertVertex(const T vertex)
-{
-	if(numVertices == maxVertices) return false;
-	NodeTable[numVertices].data = vertex;
-	numVertices++;
-	return true;
-}
-template<class T,class E>
-bool Graphlnk<T,E>::removeVertex(int v)
-{
-	if(numVertices == 1|| v<0 || v>=numVertices )return false;
-	Edge<T,E> *p,*s,*t;
-	int k;
-	while (NodeTable[v].adj != NULL)
-	{
-		p = NodeTable[v].adj;
-		k = p->dest;
-		s = NodeTable[k].adj;
-		t = NULL;
-		while(s != NULL && s->dest !=v)
-		{
-			t = s;
-			s = s->link;
-		}
-		if(s != NULL)
-		{
-			if( t == NULL) NodeTable[k].adj = s->link;
-			else t->link = s->link;
-			delete s;
-		}
-		NodeTable[v].adj = p->link;
-		delete p;
-		numEdges--;
+void Readtxt::DeletePath() {
+	int a1, a2;
+	int a[2025];
+	int b[2025];
+	int c[2025];
+	ofstream ifile1;
+	cout << "输入你要删除的线路的两个路由：";
+	cin >> a1 >> a2;
+	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
+	for (int i = 0; i < (int)Pat.size(); i++) {
+		a[i] = Pat[i].start;
+		b[i] = Pat[i].end;
+		c[i] = Pat[i].path;
+		if (a[i] == a1 || b[i] == a1 || a[i] == a2 || b[i] == a2) { continue; }
+		ifile1 << a[i] << " " << b[i] << " " << c[i] << endl;
 	}
-	numVertices --;
-	NodeTable[v].data = NodeTable[numVertices].data;
-	p = NodeTable[v].adj = NodeTable[numVertices].adj;
-	while (p!= NULL)
-	{
-		s = NodeTable[p->dest].adj;
-		while (s!= NULL)
-			if(s ->dest == numVertices){ s->dest = v;break;}
-			else s = s->link;
-	}
-	return true;
+	ifile1.close();
 }
-template<class T,class E>
-bool Graphlnk<T,E>::insertEdge(int v1, int v2,E cost)
-{
-	if(v1 >=0 && v1< numVertices && v2>=0 && v2<numVertices)
-	{
-		Edge<T,E> *q,*p = NodeTable[v1].adj;
-		while (p!=NULL && p->dest != v2)
-		{
-			p = p->link;
-		}
-		if(p != NULL ) return false;
-		p = new Edge<T,E>;
-		q = new Edge<T,E>;
-		p->dest = v2;
-		p->cost = cost;
-		p->link = NodeTable[v1].adj;
-		NodeTable[v1].adj = p;
-		q ->dest = v1;
-		q ->cost = cost;
-		q->link = NodeTable[v2].adj;
-		NodeTable[v2].adj = q;
-		numEdges ++;
-		return true;
-	}
-	return false;
-}
-template<class T,class E>
-bool Graphlnk<T,E>::removeEdge(int v1,int v2)
-{
-	if(v1 != -1 &&v2 != -1)
-	{
-		Edge<T,E> *p = NodeTable[v1].adj, *q = NULL,*s = p;
-		while(p!= NULL && p->dest != v2)
-		{
-			 q = p;
-			 p = p->link;
-		}
-		if(p!= NULL)
-		{
-			if(p == s)
-				NodeTable[v1].adj = p->link;
-			else
-			{
-				 q ->link = p->link;
-			}
-			delete p;
-		}
-		else
-		{
-			return false;
-		}
-		p = NodeTable[v2].adj;
-		q = NULL;
-		s = p;
-		while (p->dest !=v1)
-		{
-			q=  NULL;
-			s = p;
-		}
-		if(p == s)
-			NodeTable[v2].adj = p->link;
-		else
-		{
-			q->link = p->link;
-		}
-		delete p;
-		return true;
-	}
-	return false;
-}
-
 #endif
