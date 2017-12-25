@@ -24,6 +24,7 @@ int main() {
 		case 2:system("cls"); Rea.Add(); Rea.Out(); continue;
 		case 3:system("cls"); Rea.DeleteRouter(); Rea.Out(); continue;
 		case 4:system("cls"); Rea.DeletePath(); Rea.Out(); continue;
+>>>>>>> fbq
 		case 5:break;
 		default:
 			break;
