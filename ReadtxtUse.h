@@ -128,8 +128,4 @@ void Readtxt::Out() {
 	Rou.erase(Rou.begin(),Rou.end()); Pat.erase(Pat.begin(),Pat.end());
 	return;
 }
-#endif#endif
 #endif
-
-
-//////////////////////////////*//////////////////////////////////////
