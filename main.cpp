@@ -2,7 +2,7 @@
 int main() {
 	Readtxt Rea;
 	int i;
-	while (1) {
+	1while (1) {
 		cout << "*******************************************" << endl;
 		cout << "1.查询路由表" << endl;
 		cout << "2.新增路由器" << endl;
