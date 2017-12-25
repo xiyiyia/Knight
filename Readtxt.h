@@ -1,7 +1,7 @@
 #ifndef READTXT_H_
 #define READTXT_H_
-#include"data.h"
 #include<vector>
+#include"data.h"
 class Readtxt {
 private:
 	vector<Router>Rou;

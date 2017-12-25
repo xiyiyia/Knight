@@ -1,4 +1,6 @@
 #include"Readtxt.h"
+#include"Graphlnk.h"
+
 int main() {
 	Readtxt Rea;
 	int i;

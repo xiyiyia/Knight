@@ -1,7 +1,9 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 const int maxWeight = 30;
-const int DeafultVertices = 30;		
+const int DeafultVertices = 30;	
+const int maxValue = 30;
+
 template<class T,class E>
 struct Edge
 {
