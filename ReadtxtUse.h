@@ -1,6 +1,5 @@
 #ifndef READTXTUSE_H_
 #define READTXTUSE_H_
-
 #include<fstream>
 #include<string>
 #include"Readtxt.h"
@@ -35,6 +34,7 @@ void Readtxt::Shortest() {
 	int b[2025];
 	int c[2025];
 	int d[2025];
+<<<<<<< HEAD
 	int a1[2025];
 	int b1[2025];
 	int e, D;
@@ -87,7 +87,7 @@ void Readtxt::DeleteRouter() {
 	cin >> a1;
 	ifile1.open("Router.txt");
 	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
-	for (int j = 0; j < (int)Rou.size(); j++) {
+	for (int j = 0; j < (int)Rou.size()-1; j++) {
 		d[j] = Rou[j].number;
 		if (d[j] == a1) { continue; }
 		ifile1 <<d[j] << endl;
@@ -95,7 +95,7 @@ void Readtxt::DeleteRouter() {
 	ifile1.close();
 	ifile2.open("Path.txt");
 	if (!ifile2) { cout << "无法打开文本" << endl; exit(1); }
-	for (int i = 0; i < (int)Pat.size(); i++) {
+	for (int i = 0; i < (int)Pat.size()-1; i++) {
 		a[i] = Pat[i].start;
 		b[i] = Pat[i].end;
 		c[i] = Pat[i].path;
@@ -114,17 +114,18 @@ void Readtxt::DeletePath() {
 	cin >> a1 >> a2;
 	ifile1.open("Path.txt");
 	if (!ifile1) { cout << "无法打开文本" << endl; exit(1); }
-	for (int i = 0; i < (int)Pat.size(); i++) {
+	for (int i = 0; i < (int)Pat.size()-1; i++) {
 		a[i] = Pat[i].start;
 		b[i] = Pat[i].end;
 		c[i] = Pat[i].path;
-		if (a[i] == a1 || b[i] == a1 || a[i] == a2 || b[i] == a2) { continue; }
+		if (a[i] == a1&&b[i] == a2) { continue; }
+		if(a[i] == a2&&b[i] == a1) { continue; }
 		ifile1 << a[i] << " " << b[i] << " " << c[i] << endl;
 	}
 	ifile1.close();
 }
 void Readtxt::Out() {
-	Rou.clear(); Pat.clear();
+	Rou.erase(Rou.begin(),Rou.end()); Pat.erase(Pat.begin(),Pat.end());
 	return;
 }
 #endif
