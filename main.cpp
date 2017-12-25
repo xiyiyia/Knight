@@ -18,6 +18,10 @@ int main() {
 		case 2:Rea.Add(); Rea.Out(); continue;
 		case 3:Rea.DeleteRouter(); Rea.Out(); continue;
 		case 4:Rea.DeletePath(); Rea.Out(); continue;
+		case 1:system("cls"); Rea.Shortest(); Rea.Out(); continue;
+		case 2:system("cls"); Rea.Add(); Rea.Out(); continue;
+		case 3:system("cls"); Rea.DeleteRouter(); Rea.Out(); continue;
+		case 4:system("cls"); Rea.DeletePath(); Rea.Out(); continue;
 		case 5:break;
 		default:
 			break;
