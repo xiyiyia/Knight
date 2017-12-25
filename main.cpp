@@ -14,6 +14,7 @@ int main() {
 		cin >> i;
 		Rea.Read();
 		switch (i){
+<<<<<<< HEAD
 		case 1:Rea.Shortest(); Rea.Out(); continue;
 		case 2:Rea.Add(); Rea.Out(); continue;
 		case 3:Rea.DeleteRouter(); Rea.Out(); continue;
