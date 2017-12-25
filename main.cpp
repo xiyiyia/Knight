@@ -4,20 +4,20 @@ int main() {
 	int i;
 	while (1) {
 		cout << "*******************************************" << endl;
-		cout << "1.æŸ¥è¯¢è·¯ç”±è¡¨" << endl;
-		cout << "2.æ–°å¢žè·¯ç”±å™¨" << endl;
-		cout << "3.åˆ é™¤è·¯ç”±å™¨" << endl;
-		cout << "4.åˆ é™¤ä¸€æ¡è·¯ç”±å™¨çº¿è·¯" << endl;
-		cout << "5.é€€å‡º" << endl;
+		cout << "1.²éÑ¯Â·ÓÉ±í" << endl;
+		cout << "2.ÐÂÔöÂ·ÓÉÆ÷" << endl;
+		cout << "3.É¾³ýÂ·ÓÉÆ÷" << endl;
+		cout << "4.É¾³ýÒ»ÌõÂ·ÓÉÆ÷ÏßÂ·" << endl;
+		cout << "5.ÍË³ö" << endl;
 		cout << "*******************************************" << endl;
-		cout << "è¾“å…¥ä½ çš„é€‰æ‹©ï¼š";
+		cout << "ÊäÈëÄãµÄÑ¡Ôñ£º";
 		cin >> i;
 		Rea.Read();
 		switch (i){
-		case 1:Rea.Shortest(); continue;
-		case 2:Rea.Add(); continue;
-		case 3:Rea.DeleteRouter(); continue;
-		case 4:Rea.DeletePath(); continue;
+		case 1:system("cls"); Rea.Shortest(); Rea.Out(); continue;
+		case 2:system("cls"); Rea.Add(); Rea.Out(); continue;
+		case 3:system("cls"); Rea.DeleteRouter(); Rea.Out(); continue;
+		case 4:system("cls"); Rea.DeletePath(); Rea.Out(); continue;
 		case 5:break;
 		default:
 			break;
