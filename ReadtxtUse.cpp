@@ -4,7 +4,7 @@
 #include"Graphlnk.h"
 #include"GraphTrue.cpp"
 
-void Readtxt::Read() {
+void Readtxt::Read() {   //×¢ÊÍ
 	int a1, a2, a3;
 	Router R;
 	Path P;
