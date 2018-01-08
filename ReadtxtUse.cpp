@@ -5,6 +5,7 @@
 #include"GraphTrue.cpp"
 
 void Readtxt::Read() {   //×¢ÊÍ
+    cout<<"¸µØÃå¹"<<endl;
 	int a1, a2, a3;
 	Router R;
 	Path P;
