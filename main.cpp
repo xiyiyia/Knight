@@ -2,7 +2,7 @@
 #include"Graphlnk.h"
 
 int main() {
-	cout << "----by•ûÄÜ£¡" << endl;
+	cout << "•ûÄÜ" <<endl;
 	Readtxt Rea;
 	int i;
 	while (1) {
